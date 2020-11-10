@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Nueva Funcion</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+
+
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<form class="login100-form validate-form p-l-55 p-r-55 p-t-178">
+					<span class="login100-form-title">
+						Agregar Funcion 
+					</span>
+
+					<div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
+						<div class="form-group">
+							<label for="exampleFormControlSelect2">Peliculas</label>
+							<select multiple class="form-control" id="funciones">
+							  <option>1</option>
+							  <option>2</option>
+							  <option>3</option>
+							  <option>4</option>
+							  <option>5</option>
+							</select>
+						  </div>
+					</div>
+					
+					<div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
+						<input class="input100" type="text" id="sala" placeholder="Sala">
+						<span class="focus-input100"></span>
+					</div>
+					
+					<div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
+						<input class="input100" type="text" id="horario" placeholder="Horario">
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="container" >
+						<button type="button" class="btn btn-success" onclick="agregarUsuario()">Guardar funcion</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+<!--===============================================================================================-->
+<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+
+<script src="vendor/animsition/js/animsition.min.js"></script>
+
+<script src="vendor/bootstrap/js/popper.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<script src="vendor/select2/select2.min.js"></script>
+
+<script src="vendor/daterangepicker/moment.min.js"></script>
+<script src="vendor/daterangepicker/daterangepicker.js"></script>
+
+<script src="vendor/countdowntime/countdowntime.js"></script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="js/main.js"></script>
+<!--===============================================================================================-->
+
+	<script type="text/javascript">
+		function agregarUsuario(){
+			let xhr = new XMLHttpRequest();
+			var ruta = 'http://localhost:4000/registroCliente';
+			let json = JSON.stringify({
+			nombre: document.getElementById("name").value,
+			apellido: document.getElementById("lastname").value,
+			usuario: document.getElementById("user").value,
+			contra: document.getElementById("pass").value,
+			confirmacion: document.getElementById("confi").value
+			});
+			console.log(json)
+			xhr.open("POST", ruta);
+			xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8')
+			xhr.send(json)
+
+			xhr.onreadystatechange = function() {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    var response = JSON.parse(xhr.responseText)
+
+                    if(response.status == 200) {
+						swal ( " Usuario registrado con Exito " );
+						location.href = "Login.html"
+                    } else if (response.status == 400) {
+                        swal ( " Este Usuario ya existe " );
+                    } else if (response.status == 409) {
+						swal ( " Las contraseñas no coinciden " );
+					}
+                }
+          	}
+		}
+	</script>
+
+	</body>
+</html>
